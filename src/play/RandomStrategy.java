@@ -3,71 +3,158 @@ package play;
 import java.security.SecureRandom;
 import java.util.Iterator;
 
-import gametree.GameNode;
 import play.exception.InvalidStrategyException;
+
+/**
+ *
+ * Computational Game Theory - 2019/2020
+ * Faculty of Sciences and Technology of
+ * New University of Lisbon (FCT NOVA)
+ *
+ * 1st Tournament - Prisoner's Dilemma,
+ * using NOVA GTI (Game Theory Interactive) Platform
+ *
+ * Random Strategy
+ *
+ * Authors:
+ * - Pedro Lamarao Pais (Student no. 48247)
+ *   - pgp@campus.fct.unl.pt
+ * - Ruben Andre Barreiro (Student no. 42648)
+ *   - r.barreiro@campus.fct.unl.pt
+ *
+ */
 
 public class RandomStrategy extends Strategy {
 
 	@Override
 	public void execute() throws InterruptedException {
-		
+
+		// Creating a Random Seed
 		SecureRandom random = new SecureRandom();
-		
+
+		// Waits until the Game Tree become known and available
 		while(!this.isTreeKnown()) {
-			System.err.println("Waiting for game tree to become available.");
+
+			System.err.println("Waiting for Game Tree to become Available...");
+
+			//noinspection BusyWait
 			Thread.sleep(1000);
+
 		}
-	
+
+		// Infinite Loop
 		while(true) {
 		
 			PlayStrategy myStrategy = this.getStrategyRequest();
-			if(myStrategy == null) //Game was terminated by an outside event
-				break;	
-			boolean playComplete = false;
-						
-			while(! playComplete ) {
-				if(myStrategy.getFinalP1Node() != -1) {
-					GameNode finalP1 = this.tree.getNodeByIndex(myStrategy.getFinalP1Node());
-					if(finalP1 != null)
-						System.out.println("Terminal node in last round as P1: " + finalP1);
-				}
-				
-				if(myStrategy.getFinalP2Node() != -1) {
-					GameNode finalP2 = this.tree.getNodeByIndex(myStrategy.getFinalP2Node());
-					if(finalP2 != null)
-						System.out.println("Terminal node in last round as P2: " + finalP2);
-				}
-				
-				Iterator<Integer> iterator = tree.getValidationSet().iterator();
-				Iterator<String> keys = myStrategy.keyIterator();
-				
-				while(iterator.hasNext()) {
-					double[] moves = new double[iterator.next()];
-					double sum = 0;
-					for(int i = 0; i < moves.length - 1; i++) {
-						moves[i] = random.nextDouble();
-						while(sum + moves[i] >= 1) moves[i] = random.nextDouble();
-						sum = sum + moves[i];
-					}
-					moves[moves.length-1] = ((double) 1) - sum;
-					
-					for(int i = 0; i < moves.length; i++) {
-						if(!keys.hasNext()) {
-							System.err.println("PANIC: Strategy structure does not match the game.");
-							return;
-						}
-						myStrategy.put(keys.next(), moves[i]);
-					}
-				}
-				
-				try{
-					this.provideStrategy(myStrategy);
-					playComplete = true;
-				} catch (InvalidStrategyException e) {
-					System.err.println("Invalid strategy: " + e.getMessage());;
-					e.printStackTrace(System.err);
-				} 
+
+			// The Strategy chosen by me become NULL,
+			// what means (probably) that the Game
+			// was terminated by an outside event
+			if(myStrategy == null) {
+
+				// Breaks the Infinite Loop
+				break;
+
 			}
+
+			// Prints the Basic Information about this Strategy
+			System.out.println("Start playing with the Random Strategy...");
+
+			// My Play wasn't completed yet
+			boolean playComplete = false;
+
+			// While My Play isn't complete yet
+			while(! playComplete ) {
+
+				// Verify if the current Game Nodes for the Plays as both,
+				// Player #1 and Player #2, are Terminal Game Nodes or not
+				StrategyCommonUtils.isATerminalGameNode
+						(
+								myStrategy,
+								this.tree.getNodeByIndex(myStrategy.getFinalP1Node()),
+								this.tree.getNodeByIndex(myStrategy.getFinalP2Node())
+						);
+
+				// The Current Validation Set for the Available Moves
+				Iterator<Integer> currentValidationSetIterator = tree.getValidationSet().iterator();
+
+				// The Labels for All the Available Moves
+				Iterator<String> availableMovesLabels = myStrategy.keyIterator();
+
+				// Loop to check all the Entries of the Validation Set
+				// (i.e., a Decision Node of the Tree representing the current Game)
+				while(currentValidationSetIterator.hasNext()) {
+
+					// Creates the array to keep the information for
+					// the Probabilities for all the Available Moves
+					double[] availableMovesProbabilities = new double[ currentValidationSetIterator.next() ];
+
+					// The Sum of the Probabilities for all the Available Moves
+					double sumAvailableMovesProbabilities = 0;
+
+					// Sets the Probabilities for all the Available Moves, excluding the last one Move
+					for(int i = 0; i < ( availableMovesProbabilities.length - 1 ); i++) {
+
+						// Sets the Probability for the current Move
+						//noinspection ConstantConditions
+						availableMovesProbabilities[i] = random.nextDouble();
+
+						// While the current Sum of Probabilities set for all the Available Moves it's
+						// greater or equal than one, sets a new Probability for the current Move
+						while( ( sumAvailableMovesProbabilities + availableMovesProbabilities[i] ) >= 1 ) {
+
+							availableMovesProbabilities[i] = random.nextDouble();
+
+						}
+
+						// Sums the Probability for the current Move to
+						// the Sum of Probabilities set for all the Available Moves
+						sumAvailableMovesProbabilities += availableMovesProbabilities[i];
+
+					}
+
+					// Sets the Remaining Available Probability for the Remaining Available Move
+					availableMovesProbabilities[availableMovesProbabilities.length - 1] =
+												( ( (double) 1 ) - sumAvailableMovesProbabilities );
+
+
+					// Assigns all the current Available Probabilities to all the current Available Moves
+					for(double availableMoveProbability : availableMovesProbabilities) {
+
+						// The Strategy's Structure doesn't match the current Game
+						if(!availableMovesLabels.hasNext()) {
+
+							System.err.println("PANIC: Strategy's Structure doesn't match the current Game!!!");
+
+							return;
+
+						}
+
+						// Assigns the current Available Probability to the current
+						myStrategy.put( availableMovesLabels.next(), availableMoveProbability );
+
+					}
+
+				}
+				
+				try {
+
+					// Sets and provides the final Strategy
+					this.provideStrategy(myStrategy);
+
+					// Sets My Play as completed, as long I'm finished playing
+					playComplete = true;
+
+				}
+				catch (InvalidStrategyException invalidStrategyException) {
+
+					System.err.println("Invalid Strategy: " + invalidStrategyException.getMessage());
+					invalidStrategyException.printStackTrace(System.err);
+
+				}
+
+			}
+
 		}
 		
 	}
