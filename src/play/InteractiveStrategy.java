@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 
-import gametree.GameNode;
 import play.exception.InvalidStrategyException;
 import reader.NonBlockingReader;
 
@@ -28,20 +27,10 @@ public class InteractiveStrategy extends Strategy {
 				break;
 			boolean playComplete = false;
 			while(! playComplete ) {
-			
-				if(myStrategy.getFinalP1Node() != -1) {
-					GameNode finalP1 = this.tree.getNodeByIndex(myStrategy.getFinalP1Node());
-					if(finalP1 != null)
-						System.out.println("Terminal node in last round as P1: " + finalP1);
-				}
-				
-				if(myStrategy.getFinalP2Node() != -1) {
-					GameNode finalP2 = this.tree.getNodeByIndex(myStrategy.getFinalP2Node());
-					if(finalP2 != null)
-						System.out.println("Terminal node in last round as P2: " + finalP2);
-				}
-				
-				System.out.println("Continue playing? [y/n: default is y]");
+
+                StrategyCommonUtils.isATerminalGameNode(myStrategy, this.tree.getNodeByIndex(myStrategy.getFinalP1Node()), this.tree.getNodeByIndex(myStrategy.getFinalP2Node()));
+
+                System.out.println("Continue playing? [y/n: default is y]");
 				try{
 					if(r.nonBlockingRead(br).equalsIgnoreCase("n")){
 						this.quitGame(myStrategy);
