@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GLPKSolverPack">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/GLPKSolverPack.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

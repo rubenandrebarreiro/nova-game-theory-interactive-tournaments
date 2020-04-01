@@ -23,5 +23,7 @@
       </library>
     </orderEntry>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" name="GLPKSolverPack" level="project" />
+    <orderEntry type="library" name="SCPSolver" level="project" />
   </component>
 </module>
