@@ -6,5 +6,7 @@
         <language minSize="194" name="Java" />
       </Languages>
     </inspection_tool>
+    <inspection_tool class="HoconIncludeResolution" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="HoconRequiredIncludeResolution" enabled="true" level="ERROR" enabled_by_default="true" />
   </profile>
 </component>
