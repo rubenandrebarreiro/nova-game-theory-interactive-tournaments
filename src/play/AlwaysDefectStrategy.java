@@ -6,6 +6,25 @@ import java.util.Iterator;
 
 import static play.StrategyCommonUtils.isATerminalGameNode;
 
+/**
+ *
+ * Computational Game Theory - 2019/2020
+ * Faculty of Sciences and Technology of
+ * New University of Lisbon (FCT NOVA)
+ *
+ * 1st Tournament - Prisoner's Dilemma,
+ * using NOVA GTI (Game Theory Interactive) Platform
+ *
+ * Always Defect Strategy
+ *
+ * Authors:
+ * - Pedro Lamarao Pais (Student no. 48247)
+ *   - pgp@campus.fct.unl.pt
+ * - Ruben Andre Barreiro (Student no. 42648)
+ *   - r.barreiro@campus.fct.unl.pt
+ *
+ */
+
 public class AlwaysDefectStrategy extends Strategy {
 
     @Override
@@ -37,7 +56,7 @@ public class AlwaysDefectStrategy extends Strategy {
             }
 
             // Prints the Basic Information about this Strategy
-            System.out.println("Start playing with the Random Strategy...");
+            System.out.println("Start playing with the Always Defect Strategy...");
 
             // My Play wasn't completed yet
             boolean playComplete = false;

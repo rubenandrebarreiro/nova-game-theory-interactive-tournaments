@@ -56,7 +56,7 @@ public class AlwaysCooperateStrategy extends Strategy {
             }
 
             // Prints the Basic Information about this Strategy
-            System.out.println("Start playing with the Random Strategy...");
+            System.out.println("Start playing with the Always Cooperate Strategy...");
 
             // My Play wasn't completed yet
             boolean playComplete = false;
