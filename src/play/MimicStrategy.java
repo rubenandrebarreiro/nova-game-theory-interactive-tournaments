@@ -134,13 +134,13 @@ public class MimicStrategy extends Strategy {
 				if(myStrategy.getFinalP1Node() != -1) {
 					finalP1 = this.tree.getNodeByIndex(myStrategy.getFinalP1Node());
 					if(finalP1 != null)
-						System.out.println("Terminal node in last round as P1: " + finalP1);
+						System.out.println("Terminal Node in Last Game Stage/Round as Player #1: " + finalP1);
 				}
 
 				if(myStrategy.getFinalP2Node() != -1) {
 					finalP2 = this.tree.getNodeByIndex(myStrategy.getFinalP2Node());
 					if(finalP2 != null)
-						System.out.println("Terminal node in last round as P2: " + finalP2);
+						System.out.println("Terminal Node in Last Game Stage/Round as Player #2: " + finalP2);
 				}
 
 				Iterator<Integer> iterator = tree.getValidationSet().iterator();
