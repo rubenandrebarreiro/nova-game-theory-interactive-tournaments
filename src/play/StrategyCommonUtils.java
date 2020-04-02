@@ -31,7 +31,7 @@ public class StrategyCommonUtils {
 
             if (gameNodePlayer1 != null) {
 
-                System.out.println("Terminal Game Node in last round as P1 (Player #1): " + gameNodePlayer1);
+                System.out.println("Terminal Game Node in last Game Stage/Round as P1 (Player #1): " + gameNodePlayer1);
 
             }
 
@@ -41,11 +41,13 @@ public class StrategyCommonUtils {
 
             if (gameNodePlayer2 != null) {
 
-                System.out.println("Terminal Game Node in last round as P2 (Player #2): " + gameNodePlayer2);
+                System.out.println("Terminal Game Node in last Stage/Round as P2 (Player #2): " + gameNodePlayer2);
 
             }
 
         }
+
+        System.out.println("\n\n");
 
     }
 
