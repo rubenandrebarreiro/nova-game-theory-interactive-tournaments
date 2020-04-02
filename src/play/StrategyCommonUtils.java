@@ -24,6 +24,9 @@ public class StrategyCommonUtils {
 
     static void isATerminalGameNode(PlayStrategy myStrategy, GameNode gameNodePlayer1, GameNode gameNodePlayer2) {
 
+        System.out.println("Checking if was reached a Terminal Game Node in " +
+                           "the last Game Stage/Round for any of the Players...\n\n");
+
         if(myStrategy.getFinalP1Node() != -1) {
 
             if (gameNodePlayer1 != null) {
