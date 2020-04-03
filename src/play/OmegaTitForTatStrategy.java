@@ -27,116 +27,21 @@ import static play.StrategyCommonUtils.isATerminalGameNode;
  *
  */
 
+@SuppressWarnings("all")
 public class OmegaTitForTatStrategy extends Strategy {
-
-    // Constants:
-
-    /**
-     * The Randomness Threshold Factor of 0.25 (i.e., 25% of the Stages/Rounds) of the Game.
-     *
-     * NOTES:
-     * - The analysis and respective adjustment for this Randomness Threshold value
-     *   should be considered, in separately, for each kind of different Game Played;
-     */
-    private static final float RANDOMNESS_THRESHOLD_FACTOR = 0.25f;
-
-    /**
-     * The String Label for the Cooperate Move, in Upper Case.
-     */
-    private static final String COOPERATE = "COOPERATE";
-
-    /**
-     * The String Label for the Defect Move, in Upper Case.
-     */
-    private static final String DEFECT = "DEFECT";
-
-    /**
-     * The String Label for the Unknown Move, in Upper Case.
-     */
-    private static final String UNKNOWN = "UNKNOWN";
-
-    /**
-     * The String Label for the Cooperate Move, as Player #1
-     */
-    private static final String COOPERATE_AS_PLAYER_1 = "1:1:Cooperate";
-
-    /**
-     * The String Label for the Defect Move, as Player #1
-     */
-    private static final String DEFECT_AS_PLAYER_1 = "1:1:Defect";
-
-    /**
-     * The String Label for the Cooperate Move, as Player #2
-     */
-    private static final String COOPERATE_AS_PLAYER_2 = "2:1:Cooperate";
-
-    /**
-     * The String Label for the Defect Move, as Player #1
-     */
-    private static final String DEFECT_AS_PLAYER_2 = "2:1:Defect";
-
-    /**
-     * The total number of Game Stages/Rounds played, until the moment.
-     */
-    private static int TOTAL_NUM_OF_GAME_STAGES_ROUNDS;
-
-    /**
-     * The maximum number of times for allowing My Opponent's Moves changes,
-     * meaning after that, I will start to play Always Defect from then.
-     */
-    private static int MAX_NUM_OF_TIMES_FOR_ALLOWING_MY_OPPONENT_MOVES_CHANGES;
-
 
     // Global Instance Variables:
 
     /**
-     * The number of Game Stages/Rounds currently played.
+     * The boolean value to keep information about if
+     * the Omega Tit For Tat Strategy's Common Utils, it was initialized or not.
      */
-    private int numOfGameStagesRoundsCurrentlyPlayed;
+    private boolean isMyOmegaTitForTatStrategyCommonUtilsInitialized;
 
     /**
-     * The Last Move played by My Opponent, in the last Game Stage/Round, as Player #1.
+     * The Omega Tit For Tat Strategy's Common Utils.
      */
-    private String myOpponentMovePlayedInLastGameStageRoundAsPlayer1;
-
-    /**
-     * The Last Move played by My Opponent, in the last Game Stage/Round, as Player #2.
-     */
-    private String myOpponentMovePlayedInLastGameStageRoundAsPlayer2;
-
-    /**
-     * The number of times that My Opponent's Moves changed, every time he played, as Player #1.
-     */
-    private int totalNumOfTimesMyOpponentMovesChangedAsPlayer1;
-
-    /**
-     * The number of times that My Opponent's Moves changed, every time he played, as Player #2.
-     */
-    private int totalNumOfTimesMyOpponentMovesChangedAsPlayer2;
-
-    /**
-     * The boolean value to keep the information about
-     * if I am currently defecting as punishment for
-     * the possible randomness behaviour from My Opponent, as Player #1.
-     *
-     * NOTES:
-     * - This flag should be changed to true, after the Randomness Threshold Factor
-     *   applied to the total number of times that My Opponent's Moves changed,
-     *   as Player #1, every time he played;
-     */
-    private boolean defectingAsPunishmentToMyOpponentAsPlayer1;
-
-    /**
-     * The boolean value to keep the information about
-     * if I am currently defecting as punishment for
-     * the possible randomness behaviour from My Opponent, as Player #2.
-     *
-     * NOTES:
-     * - This flag should be changed to true, after the Randomness Threshold Factor
-     *   applied to the total number of times that My Opponent's Moves changed,
-     *   as Player #2, every time he played;
-     */
-    private boolean defectingAsPunishmentToMyOpponentAsPlayer2;
+    private OmegaTitForTatStrategyCommonUtils myOmegaTitForTatStrategyCommonUtils;
 
 
     // Public Methods/Procedures:
@@ -165,11 +70,7 @@ public class OmegaTitForTatStrategy extends Strategy {
         GameNode finalGameNodePlayer1;
         GameNode finalGameNodePlayer2;
 
-
-        this.setupOmegaTitForTatParametersConfiguration();
-
-        this.printOmegaTitForTatParametersConfiguration();
-
+        this.isMyOmegaTitForTatStrategyCommonUtilsInitialized = false;
 
         // Prints the Basic Information about this Strategy
         System.out.println("Start playing with the Omega Tit For Tat Strategy...\n\n");
@@ -178,17 +79,32 @@ public class OmegaTitForTatStrategy extends Strategy {
         // Infinite Loop
         while(true) {
 
-            PlayStrategy myStrategy = this.getStrategyRequest();
+            PlayStrategy myOmegaTitForTatStrategy = this.getStrategyRequest();
 
             // The Strategy chosen by me become NULL,
             // what means (probably) that the Game
             // was terminated by an outside event
-            if (myStrategy == null) {
+            if (myOmegaTitForTatStrategy == null) {
 
                 // Breaks the Infinite Loop
                 break;
 
             }
+
+            if( !this.isMyOmegaTitForTatStrategyCommonUtilsInitialized ) {
+
+
+                this.myOmegaTitForTatStrategyCommonUtils =
+                        new OmegaTitForTatStrategyCommonUtils(myOmegaTitForTatStrategy);
+
+                this.myOmegaTitForTatStrategyCommonUtils.setupOmegaTitForTatParametersConfiguration();
+
+                this.myOmegaTitForTatStrategyCommonUtils.printOmegaTitForTatParametersConfiguration();
+
+                this.isMyOmegaTitForTatStrategyCommonUtilsInitialized = true;
+
+            }
+
 
             // My Play wasn't completed yet
             boolean playComplete = false;
@@ -203,25 +119,30 @@ public class OmegaTitForTatStrategy extends Strategy {
                 // Player #1 and Player #2, are Terminal Game Nodes or not
                 isATerminalGameNode
                         (
-                                myStrategy,
-                                this.tree.getNodeByIndex(myStrategy.getFinalP1Node()),
-                                this.tree.getNodeByIndex(myStrategy.getFinalP2Node())
+                                myOmegaTitForTatStrategy,
+                                this.tree.getNodeByIndex(myOmegaTitForTatStrategy.getFinalP1Node()),
+                                this.tree.getNodeByIndex(myOmegaTitForTatStrategy.getFinalP2Node())
                         );
 
                 // The Current Validation Set for the Available Moves
                 Iterator<Integer> currentValidationSetIterator = tree.getValidationSet().iterator();
 
                 // The Labels for All the Available Moves
-                Iterator<String> availableMovesLabels = myStrategy.keyIterator();
+                Iterator<String> availableMovesLabels = myOmegaTitForTatStrategy.keyIterator();
 
                 System.out.println("I will define My Strategy for the next Game Stage/Round...\n\n");
 
-                finalGameNodePlayer1 = this.tree.getNodeByIndex(myStrategy.getFinalP1Node());
-                finalGameNodePlayer2 = this.tree.getNodeByIndex(myStrategy.getFinalP2Node());
+                finalGameNodePlayer1 = this.tree.getNodeByIndex(myOmegaTitForTatStrategy.getFinalP1Node());
+                finalGameNodePlayer2 = this.tree.getNodeByIndex(myOmegaTitForTatStrategy.getFinalP2Node());
 
 
-                System.out.println("This it's the Game Stage/Round #" +
-                        ( this.numOfGameStagesRoundsCurrentlyPlayed + 1 ) +"...\n\n");
+                System.out.println
+                        (
+                                "This it's the Game Stage/Round #" +
+                                ( this.myOmegaTitForTatStrategyCommonUtils
+                                      .getNumOfGameStagesRoundsCurrentlyPlayed() + 1 ) +
+                                "...\n\n"
+                        );
 
 
                 // This is the first Game Stage/Round, so I will be nice and start Cooperating
@@ -270,7 +191,7 @@ public class OmegaTitForTatStrategy extends Strategy {
                                                " as Player #" + actingAsPlayerNum);
 
                             // Assigns the current Available Probability to the current
-                            myStrategy.put(nextAvailableMovesLabel, availableMoveProbability);
+                            myOmegaTitForTatStrategy.put(nextAvailableMovesLabel, availableMoveProbability);
 
                         }
 
@@ -294,7 +215,7 @@ public class OmegaTitForTatStrategy extends Strategy {
                                 (
                                         listOfOpponentLastMovesAsPlayer1,
                                         listOfOpponentLastMovesAsPlayer2,
-                                        myStrategy
+                                        myOmegaTitForTatStrategy
                                 );
 
                     }
@@ -310,7 +231,7 @@ public class OmegaTitForTatStrategy extends Strategy {
                 try {
 
                     // Sets and provides the final Strategy
-                    this.provideStrategy(myStrategy);
+                    this.provideStrategy(myOmegaTitForTatStrategy);
 
                     // Sets My Play as completed, as long I'm finished playing
                     playComplete = true;
@@ -326,86 +247,14 @@ public class OmegaTitForTatStrategy extends Strategy {
                 }
 
                 // Increases the number of the Game Stages/Rounds currently played, until now
-                this.numOfGameStagesRoundsCurrentlyPlayed++;
+                this.myOmegaTitForTatStrategyCommonUtils.setNumOfGameStagesRoundsCurrentlyPlayed
+                        (
+                                this.myOmegaTitForTatStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() + 1
+                        );
 
             }
 
         }
-
-    }
-
-    /**
-     * Performs the Setup of the Parameters' Configuration for the Omega Tit For Tat Strategy.
-     */
-    private void setupOmegaTitForTatParametersConfiguration() {
-
-        this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1 = "";
-        this.myOpponentMovePlayedInLastGameStageRoundAsPlayer2 = "";
-
-        // TODO number of rounds???
-        setTotalNumOfGameStagesRounds( 20 );
-
-        setMaxNumOfTimesForAllowingMyOpponentMovesChanges();
-
-        this.numOfGameStagesRoundsCurrentlyPlayed = 0;
-
-        this.totalNumOfTimesMyOpponentMovesChangedAsPlayer1 = 0;
-        this.totalNumOfTimesMyOpponentMovesChangedAsPlayer2 = 0;
-
-        this.defectingAsPunishmentToMyOpponentAsPlayer1 = false;
-        this.defectingAsPunishmentToMyOpponentAsPlayer2 = false;
-
-    }
-
-    /**
-     * Prints the Setup of the Parameters' Configuration for the Omega Tit For Tat Strategy.
-     */
-    private void printOmegaTitForTatParametersConfiguration() {
-
-        System.out.println("--- INFORMATION ABOUT THE PARAMETERS' CONFIGURATION FOR " +
-                           "THE OMEGA TIT FOR TAT STRATEGY ---");
-
-        System.out.println("\n");
-
-        System.out.println("    Total Number of Game Stages/Rounds:");
-        System.out.println("    - " + TOTAL_NUM_OF_GAME_STAGES_ROUNDS);
-
-        System.out.println("    Randomness Threshold Factor, in use:");
-        System.out.println("    - " + RANDOMNESS_THRESHOLD_FACTOR);
-
-        System.out.println("    Maximum Number of Times for allowing My Opponent's Moves Changes:");
-        System.out.println("    - " + MAX_NUM_OF_TIMES_FOR_ALLOWING_MY_OPPONENT_MOVES_CHANGES);
-
-        System.out.println("\n\n");
-
-    }
-
-    /**
-     * Sets the Total Number of the current Game Stages/Rounds.
-     *
-     * @param totalNumOfGameStagesRounds the Total Number of the current Game Stages/Rounds
-     */
-    public static void setTotalNumOfGameStagesRounds(int totalNumOfGameStagesRounds) {
-
-        TOTAL_NUM_OF_GAME_STAGES_ROUNDS = totalNumOfGameStagesRounds;
-
-    }
-
-    /**
-     * Sets the Maximum Number of Times for allowing My Opponent's Moves Changes.
-     */
-    public static void setMaxNumOfTimesForAllowingMyOpponentMovesChanges() {
-
-        MAX_NUM_OF_TIMES_FOR_ALLOWING_MY_OPPONENT_MOVES_CHANGES =
-                ( (int) Math.round
-                        (
-                                (
-                                        ( (double) RANDOMNESS_THRESHOLD_FACTOR )
-                                                            *
-                                        ( (double) TOTAL_NUM_OF_GAME_STAGES_ROUNDS)
-                                )
-                        )
-                );
 
     }
 
@@ -451,7 +300,7 @@ public class OmegaTitForTatStrategy extends Strategy {
      *
      * @param listOfOpponentLastMovesAsPlayer2 the list of My Opponent Last Moves, as Player #2
      *
-     * @param myStrategy the strategy I'm currently using, with my moves
+     * @param myOmegaTitForTatStrategy the Omega Tit For Tat Strategy I'm currently using, with my moves
      *
      * @throws GameNodeDoesNotExistException an Exception to be thrown, in the case of,
      *         an accessed Game Node, in the tree, does not exist
@@ -460,7 +309,7 @@ public class OmegaTitForTatStrategy extends Strategy {
             (
                     List<GameNode> listOfOpponentLastMovesAsPlayer1,
                     List<GameNode> listOfOpponentLastMovesAsPlayer2,
-                    PlayStrategy myStrategy
+                    PlayStrategy myOmegaTitForTatStrategy
             )
             throws GameNodeDoesNotExistException
     {
@@ -522,41 +371,54 @@ public class OmegaTitForTatStrategy extends Strategy {
 
                 System.out.println("Analysing the Last Move Played by My Opponent, as Player #1...\n\n");
 
-                if( ( this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1.equalsIgnoreCase("") )
+                if( ( this.myOmegaTitForTatStrategyCommonUtils
+                           .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
+                           .equalsIgnoreCase("") )
                                                         &&
-                    ( this.numOfGameStagesRoundsCurrentlyPlayed == 1 ) )
+                    ( this.myOmegaTitForTatStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
                 {
 
-                    this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1 =
-                                            myOpponentMoveInLastGameStageRoundParts[2].toUpperCase();
+                    this.myOmegaTitForTatStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
+                            (
+                                    myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
+                            );
 
                 }
                 else {
 
-                        if( ( !this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1.equalsIgnoreCase("") )
+                        if( ( !this.myOmegaTitForTatStrategyCommonUtils
+                                   .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
+                                   .equalsIgnoreCase("") )
                                                          &&
-                            ( !this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1
-                                  .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
+                            ( !this.myOmegaTitForTatStrategyCommonUtils
+                                   .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
+                                   .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
                     {
 
                         System.out.println("My Opponent changed his behaviour (and the previous last Move played), " +
                                            "as Player #1 and I will memorise that!!!\n\n");
 
-                        this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1 =
-                                myOpponentMoveInLastGameStageRoundParts[2].toUpperCase();
+                        this.myOmegaTitForTatStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
+                                (
+                                        myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
+                                );
 
-                        this.totalNumOfTimesMyOpponentMovesChangedAsPlayer1++;
+                        this.myOmegaTitForTatStrategyCommonUtils.setTotalNumOfTimesMyOpponentMovesChangedAsPlayer1
+                                (
+                                    this.myOmegaTitForTatStrategyCommonUtils
+                                        .getTotalNumOfTimesMyOpponentMovesChangedAsPlayer1() + 1
+                                );
 
                     }
 
                 }
 
-                this.checkIfMyOpponentIsBehavingRandomAsPayer1();
+                this.myOmegaTitForTatStrategyCommonUtils.checkIfMyOpponentIsBehavingRandomAsPayer1();
 
                 // It seems that My Opponent behaved randomly as Player #1, until now,
                 // so I will act severely and I am gonna punish him always from now,
                 // with an All Defect Strategy
-                if(this.defectingAsPunishmentToMyOpponentAsPlayer1) {
+                if( this.myOmegaTitForTatStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer1() ) {
 
                     System.out.println("My Opponent played Moves, behaving randomly, as Player #1, " +
                                        "in the last Game Stages/Rounds...\n\n");
@@ -564,16 +426,20 @@ public class OmegaTitForTatStrategy extends Strategy {
                     // As My Opponent, behaved randomly, as Player #1, in the previous Game Stages/Rounds,
                     // I am gonna also play a DEFECT move in this Game Stage/Round and from now,
                     // as a response to that, as Player #2
-                    System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_2 +
+                    System.out.println("Setting the Probability of " +
+                                        this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_2 +
                                        " as " + 0.0 + "!!!");
-                    System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_2 +
+                    System.out.println("Setting the Probability of " +
+                                        this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_2 +
                                        " as " + 1.0 + "!!!");
 
                     System.out.println("\n\n");
 
                     // Setting My Strategy, accordingly to the previously mentioned description
-                    myStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
-                    myStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
+                    myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                     .COOPERATE_AS_PLAYER_2, 0.0);
+                    myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                     .DEFECT_AS_PLAYER_2, 1.0);
 
                 }
 
@@ -587,46 +453,65 @@ public class OmegaTitForTatStrategy extends Strategy {
                     // as response to that
 
                     // My Opponent played a COOPERATE move, in the last Game Stage/Round
-                    if(myOpponentMoveInLastGameStageRoundParts[2].equalsIgnoreCase(COOPERATE)) {
+                    if
+                        (
+                                myOpponentMoveInLastGameStageRoundParts[2]
+                                        .equalsIgnoreCase(this.myOmegaTitForTatStrategyCommonUtils.COOPERATE)
+                        )
+                    {
 
-                        System.out.println("My Opponent played " + COOPERATE + " Move, as Player #1, " +
-                                           "in the last Game Stage/Round...\n\n");
+                        System.out.println("My Opponent played " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.COOPERATE +
+                                           " Move, as Player #1, in the last Game Stage/Round...\n\n");
 
                         // As My Opponent, played a COOPERATE move, in the last Game Stage/Round,
                         // I am gonna also play a COOPERATE move in this Game Stage/Round,
                         // as a response to that
-                        System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_2 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_2 +
                                            " as " + 1.0 + "!!!");
-                        System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_2 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_2 +
                                            " as " + 0.0 + "!!!");
 
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myStrategy.put(COOPERATE_AS_PLAYER_2, 1.0);
-                        myStrategy.put(DEFECT_AS_PLAYER_2, 0.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .COOPERATE_AS_PLAYER_2, 1.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .DEFECT_AS_PLAYER_2, 0.0);
 
                     }
 
                     // My Opponent played a DEFECT move, in the last Game Stage/Round
-                    else if(myOpponentMoveInLastGameStageRoundParts[2].equalsIgnoreCase(DEFECT)) {
+                    else if
+                        (
+                                myOpponentMoveInLastGameStageRoundParts[2]
+                                        .equalsIgnoreCase(this.myOmegaTitForTatStrategyCommonUtils.DEFECT)
+                        )
+                    {
 
-                        System.out.println("My Opponent played " + DEFECT + " Move, as Player #1, " +
-                                           "in the last Game Stage/Round...\n\n");
+                        System.out.println("My Opponent played " + this.myOmegaTitForTatStrategyCommonUtils.DEFECT +
+                                           " Move, as Player #1, in the last Game Stage/Round...\n\n");
 
                         // As My Opponent, played a DEFECT move, in the last Game Stage/Round,
                         // I am gonna also play DEFECT move in this Game Stage/Round,
                         // as a response to that
-                        System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_2 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_2 +
                                            " as " + 0.0 + "!!!");
-                        System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_2 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_2 +
                                            " as " + 1.0 + "!!!");
 
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
-                        myStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .COOPERATE_AS_PLAYER_2, 0.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .DEFECT_AS_PLAYER_2, 1.0);
 
                     }
 
@@ -635,22 +520,26 @@ public class OmegaTitForTatStrategy extends Strategy {
                     // - If My Opponent followed the rules, this is never happening;
                     else {
 
-                        System.out.println("My Opponent played " + UNKNOWN + " Move, as Player #1, " +
-                                           "in the last Game Stage/Round...\n\n");
+                        System.out.println("My Opponent played " + this.myOmegaTitForTatStrategyCommonUtils.UNKNOWN +
+                                           " Move, as Player #1, in the last Game Stage/Round...\n\n");
 
                         // As My Opponent, played a DEFECT move, in the last Game Stage/Round,
                         // I am gonna also play DEFECT move in this Game Stage/Round,
                         // as a response to that, to punish him for not following the rules
-                        System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_2 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_2 +
                                            " as " + 0.0 + "!!!");
-                        System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_2 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_2 +
                                            " as " + 1.0 + "!!!");
 
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
-                        myStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .COOPERATE_AS_PLAYER_2, 0.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .DEFECT_AS_PLAYER_2, 1.0);
 
                     }
 
@@ -664,41 +553,54 @@ public class OmegaTitForTatStrategy extends Strategy {
 
                 System.out.println("Analysing the Last Move Played by My Opponent, as Player #2...\n\n");
 
-                if( ( this.myOpponentMovePlayedInLastGameStageRoundAsPlayer2.equalsIgnoreCase("") )
-                                                &&
-                        ( this.numOfGameStagesRoundsCurrentlyPlayed == 1 ) )
+                if( ( this.myOmegaTitForTatStrategyCommonUtils
+                          .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2().equalsIgnoreCase("") )
+                                                      &&
+                        ( this.myOmegaTitForTatStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
                 {
 
-                    this.myOpponentMovePlayedInLastGameStageRoundAsPlayer2 =
-                            myOpponentMoveInLastGameStageRoundParts[2].toUpperCase();
+                    this.myOmegaTitForTatStrategyCommonUtils
+                        .setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2(
+                                myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
+                        );
 
                 }
                 else {
 
-                    if( ( !this.myOpponentMovePlayedInLastGameStageRoundAsPlayer2.equalsIgnoreCase("") )
+                    if( ( !this.myOmegaTitForTatStrategyCommonUtils
+                               .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
+                               .equalsIgnoreCase("") )
                                                      &&
-                        ( !this.myOpponentMovePlayedInLastGameStageRoundAsPlayer2
-                              .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
+                        ( !this.myOmegaTitForTatStrategyCommonUtils
+                               .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
+                               .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
                     {
 
                         System.out.println("My Opponent changed his behaviour (and the previous last Move played), " +
                                            "as Player #2 and I will memorise that!!!\n\n");
 
-                        this.myOpponentMovePlayedInLastGameStageRoundAsPlayer2 =
-                                myOpponentMoveInLastGameStageRoundParts[2].toUpperCase();
+                        this.myOmegaTitForTatStrategyCommonUtils
+                                .setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
+                                        (
+                                                myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
+                                        );
 
-                        this.totalNumOfTimesMyOpponentMovesChangedAsPlayer2++;
+                        this.myOmegaTitForTatStrategyCommonUtils.setTotalNumOfTimesMyOpponentMovesChangedAsPlayer2
+                                (
+                                        this.myOmegaTitForTatStrategyCommonUtils
+                                            .getTotalNumOfTimesMyOpponentMovesChangedAsPlayer2() + 1
+                                );
 
                     }
 
                 }
 
-                this.checkIfMyOpponentIsBehavingRandomAsPayer2();
+                this.myOmegaTitForTatStrategyCommonUtils.checkIfMyOpponentIsBehavingRandomAsPayer2();
 
                 // It seems that My Opponent behaved randomly as Player #2, until now,
                 // so I will act severely and I am gonna punish him always from now,
                 // with an All Defect Strategy, as Player #1
-                if(this.defectingAsPunishmentToMyOpponentAsPlayer2) {
+                if( this.myOmegaTitForTatStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer2() ) {
 
                     System.out.println("My Opponent played Moves, behaving randomly, as Player #2, " +
                                        "in the last Game Stages/Rounds...\n\n");
@@ -706,16 +608,18 @@ public class OmegaTitForTatStrategy extends Strategy {
                     // As My Opponent, behaved randomly, as Player #2, in the previous Game Stages/Rounds,
                     // I am gonna also play a DEFECT move in this Game Stage/Round and from now,
                     // as a response to that, as Player #1
-                    System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_1 +
+                    System.out.println("Setting the Probability of " +
+                                        this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_1 +
                                        " as " + 0.0 + "!!!");
-                    System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_1 +
+                    System.out.println("Setting the Probability of " +
+                                        this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_1 +
                                        " as " + 1.0 + "!!!");
 
                     System.out.println("\n\n");
 
                     // Setting My Strategy, accordingly to the previously mentioned description
-                    myStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
-                    myStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
+                    myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_1, 0.0);
+                    myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_1, 1.0);
 
                 }
 
@@ -729,46 +633,64 @@ public class OmegaTitForTatStrategy extends Strategy {
                     // as response to that
 
                     // My Opponent played a COOPERATE move, as Player #2, in the last Game Stage/Round
-                    if(myOpponentMoveInLastGameStageRoundParts[2].equalsIgnoreCase(COOPERATE)) {
+                    if
+                        (
+                                myOpponentMoveInLastGameStageRoundParts[2]
+                                        .equalsIgnoreCase(this.myOmegaTitForTatStrategyCommonUtils.COOPERATE)
+                        )
+                    {
 
-                        System.out.println("My Opponent played " + COOPERATE + " Move, as Player #2, " +
-                                           "in the last Game Stage/Round...\n\n");
+                        System.out.println("My Opponent played " + this.myOmegaTitForTatStrategyCommonUtils.COOPERATE +
+                                           " Move, as Player #2, in the last Game Stage/Round...\n\n");
 
                         // As My Opponent, played a COOPERATE move, in the last Game Stage/Round,
                         // I am gonna also play a COOPERATE move in this Game Stage/Round,
                         // as a response to that
-                        System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_1 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_1 +
                                            " as " + 1.0 + "!!!");
-                        System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_1 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_1 +
                                            " as " + 0.0 + "!!!");
 
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myStrategy.put(COOPERATE_AS_PLAYER_1, 1.0);
-                        myStrategy.put(DEFECT_AS_PLAYER_1, 0.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .COOPERATE_AS_PLAYER_1, 1.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .DEFECT_AS_PLAYER_1, 0.0);
 
                     }
 
                     // My Opponent played a DEFECT move, in the last Game Stage/Round
-                    else if(myOpponentMoveInLastGameStageRoundParts[2].equalsIgnoreCase(DEFECT)) {
+                    else if
+                        (
+                                myOpponentMoveInLastGameStageRoundParts[2]
+                                        .equalsIgnoreCase(this.myOmegaTitForTatStrategyCommonUtils.DEFECT)
+                        )
+                    {
 
-                        System.out.println("My Opponent played " + DEFECT + " Move, as Player #2, " +
-                                           "in the last Game Stage/Round...\n\n");
+                        System.out.println("My Opponent played " + this.myOmegaTitForTatStrategyCommonUtils.DEFECT +
+                                           " Move, as Player #2, in the last Game Stage/Round...\n\n");
 
                         // As My Opponent, played a DEFECT move, in the last Game Stage/Round,
                         // I am gonna also play DEFECT move in this Game Stage/Round,
                         // as a response to that
-                        System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_1 +
-                                " as " + 0.0 + "!!!");
-                        System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_1 +
-                                " as " + 1.0 + "!!!");
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_1 +
+                                            " as " + 0.0 + "!!!");
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_1 +
+                                            " as " + 1.0 + "!!!");
 
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
-                        myStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .COOPERATE_AS_PLAYER_1, 0.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .DEFECT_AS_PLAYER_1, 1.0);
 
                     }
 
@@ -777,66 +699,32 @@ public class OmegaTitForTatStrategy extends Strategy {
                     // - If My Opponent followed the rules, this is never happening;
                     else {
 
-                        System.out.println("My Opponent played " + UNKNOWN + " Move, as Player #2, " +
-                                           "in the last Game Stage/Round...\n\n");
+                        System.out.println("My Opponent played " + this.myOmegaTitForTatStrategyCommonUtils.UNKNOWN +
+                                           " Move, as Player #2, in the last Game Stage/Round...\n\n");
 
                         // As My Opponent, played a DEFECT move, in the last Game Stage/Round,
                         // I am gonna also play DEFECT move in this Game Stage/Round,
                         // as a response to that, to punish him for not following the rules
-                        System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_1 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.COOPERATE_AS_PLAYER_1 +
                                            " as " + 0.0 + "!!!");
-                        System.out.println("Setting the Probability of " + DEFECT_AS_PLAYER_1 +
+                        System.out.println("Setting the Probability of " +
+                                            this.myOmegaTitForTatStrategyCommonUtils.DEFECT_AS_PLAYER_1 +
                                            " as " + 1.0 + "!!!");
 
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
-                        myStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .COOPERATE_AS_PLAYER_1, 0.0);
+                        myOmegaTitForTatStrategy.put(this.myOmegaTitForTatStrategyCommonUtils
+                                                         .DEFECT_AS_PLAYER_1, 1.0);
 
                     }
 
                 }
 
             }
-
-        }
-
-    }
-
-    /**
-     * Checks/Verifies if My Opponent, is behaving randomly, as Player #1.
-     */
-    public void checkIfMyOpponentIsBehavingRandomAsPayer1() {
-
-        if( this.totalNumOfTimesMyOpponentMovesChangedAsPlayer1
-                                    >=
-            MAX_NUM_OF_TIMES_FOR_ALLOWING_MY_OPPONENT_MOVES_CHANGES )
-        {
-
-            System.out.println("My Opponent have being behaved randomly, as Player #1, " +
-                               "I will start to punish him, from now!!!\n\n");
-
-            this.defectingAsPunishmentToMyOpponentAsPlayer1 = true;
-
-        }
-
-    }
-
-    /**
-     * Checks/Verifies if My Opponent, is behaving randomly, as Player #2.
-     */
-    public void checkIfMyOpponentIsBehavingRandomAsPayer2() {
-
-        if( this.totalNumOfTimesMyOpponentMovesChangedAsPlayer2
-                                    >=
-                MAX_NUM_OF_TIMES_FOR_ALLOWING_MY_OPPONENT_MOVES_CHANGES )
-        {
-
-            System.out.println("My Opponent have being behaved randomly, as Player #2, " +
-                               "I will start to punish him, from now!!!\n\n");
-
-            this.defectingAsPunishmentToMyOpponentAsPlayer2 = true;
 
         }
 

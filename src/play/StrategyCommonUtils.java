@@ -20,7 +20,7 @@ import gametree.GameNode;
  *   - r.barreiro@campus.fct.unl.pt
  *
  */
-public class StrategyCommonUtils {
+public abstract class StrategyCommonUtils {
 
     static void isATerminalGameNode(PlayStrategy myStrategy, GameNode gameNodePlayer1, GameNode gameNodePlayer2) {
 
