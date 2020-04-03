@@ -183,7 +183,7 @@ public class GrimTriggerStrategyCommonUtils extends PrisonersDilemmaStrategyComm
                                     &&
             ( this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1.equalsIgnoreCase(DEFECT) ) )
         {
-            System.out.println("My Opponent played a Defect Move, in the last Game Stage/Round, as Player #1, " +
+            System.out.println("My Opponent played a " + DEFECT +" Move, in the last Game Stage/Round, as Player #1, " +
                                "I will start to punish him, from now!!!\n\n");
 
             this.setDefectingAsPunishmentToMyOpponentAsPlayer1(true);
@@ -201,7 +201,7 @@ public class GrimTriggerStrategyCommonUtils extends PrisonersDilemmaStrategyComm
                                     &&
             ( this.myOpponentMovePlayedInLastGameStageRoundAsPlayer2.equalsIgnoreCase(DEFECT) ) )
         {
-            System.out.println("My Opponent played a Defect Move, in the last Game Stage/Round, as Player #2, " +
+            System.out.println("My Opponent played a " + DEFECT +" Move, in the last Game Stage/Round, as Player #2, " +
                                "I will start to punish him, from now!!!\n\n");
 
             this.setDefectingAsPunishmentToMyOpponentAsPlayer2(true);

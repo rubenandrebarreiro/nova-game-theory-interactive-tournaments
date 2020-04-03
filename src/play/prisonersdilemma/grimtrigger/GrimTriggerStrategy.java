@@ -158,7 +158,7 @@ public class GrimTriggerStrategy extends Strategy {
                         // the Probabilities for all the Available Moves
                         double[] availableMovesProbabilities = new double[ currentValidationSetIterator.next() ];
 
-                        System.out.println("I will start nicely, and start to Cooperate as Player #" +
+                        System.out.println("I will start nicely, and start to " + COOPERATE + " as Player #" +
                                            actingAsPlayerNum + "\n\n");
 
                         // Sets the Probability for the Cooperate (C) Move as 1.0,
@@ -339,7 +339,7 @@ public class GrimTriggerStrategy extends Strategy {
                 // I am gonna punish him always from now, with an All Defect Strategy
                 if( this.myGrimTriggerStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer1() ) {
 
-                    System.out.println("My Opponent played a Defect Move, in some moment, as Player #1, " +
+                    System.out.println("My Opponent played a " + DEFECT + " Move, in some moment, as Player #1, " +
                                        "in the last Game Stages/Rounds...\n\n");
 
                     // As My Opponent, played a Defect Move, in some moment, as Player #1,
@@ -367,7 +367,7 @@ public class GrimTriggerStrategy extends Strategy {
                     if ( myOpponentMoveInLastGameStageRoundParts[2].equalsIgnoreCase(COOPERATE) ) {
 
                         System.out.println("My Opponent played " + COOPERATE +
-                                " Move, as Player #1, in the last Game Stage/Round...\n\n");
+                                           " Move, as Player #1, in the last Game Stage/Round...\n\n");
 
                         // As My Opponent, played a COOPERATE move, in the last Game Stage/Round,
                         // I am gonna also play a COOPERATE move in this Game Stage/Round,
@@ -412,7 +412,7 @@ public class GrimTriggerStrategy extends Strategy {
                 }
 
             }
-            
+
 
             // Analysing the Last Move Played by My Opponent, as Player #2
             if(Integer.parseInt(myOpponentMoveInLastGameStageRoundParts[0]) == 2) {
@@ -462,7 +462,7 @@ public class GrimTriggerStrategy extends Strategy {
                 // I am gonna punish him always from now, with an All Defect Strategy
                 if( this.myGrimTriggerStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer2() ) {
 
-                    System.out.println("My Opponent played a Defect Move, in some moment, as Player #2, " +
+                    System.out.println("My Opponent played a " + DEFECT + " Move, in some moment, as Player #2, " +
                                        "in the last Game Stages/Rounds...\n\n");
 
                     // As My Opponent, played a Defect Move, in some moment, as Player #2,

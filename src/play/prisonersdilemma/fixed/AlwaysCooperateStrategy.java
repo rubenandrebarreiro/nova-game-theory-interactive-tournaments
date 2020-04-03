@@ -42,6 +42,11 @@ public class AlwaysCooperateStrategy extends Strategy {
 
         }
 
+        System.out.println();
+
+        // Prints the Basic Information about this Strategy
+        System.out.println("Start playing with the Always Cooperate Strategy...\n\n");
+
         // Infinite Loop
         while(true) {
 
@@ -56,9 +61,6 @@ public class AlwaysCooperateStrategy extends Strategy {
                 break;
 
             }
-
-            // Prints the Basic Information about this Strategy
-            System.out.println("Start playing with the Always Cooperate Strategy...");
 
             // My Play wasn't completed yet
             boolean playComplete = false;
@@ -114,10 +116,18 @@ public class AlwaysCooperateStrategy extends Strategy {
 
                         }
 
-                        // Assigns the current Available Probability to the current
-                        myStrategy.put( availableMovesLabels.next(), availableMoveProbability );
+                        String availableMovesLabel = availableMovesLabels.next();
+
+                        // Prints the assignment the current Available Probability to the current Move
+                        System.out.println("Setting the Probability of " + availableMovesLabel +
+                                           " as " + availableMoveProbability + "!!!\n");
+
+                        // Assigns the current Available Probability to the current Move
+                        myStrategy.put(availableMovesLabel, availableMoveProbability );
 
                     }
+
+                    System.out.println("\n\n");
 
                     playerNum++;
 
