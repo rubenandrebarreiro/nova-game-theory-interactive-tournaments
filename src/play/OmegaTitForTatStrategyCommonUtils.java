@@ -352,7 +352,7 @@ public class OmegaTitForTatStrategyCommonUtils extends StrategyCommonUtils {
             System.out.println("My Opponent have being behaved randomly, as Player #1, " +
                     "I will start to punish him, from now!!!\n\n");
 
-            this.setDefectingAsPunishmentToMyOpponentAsPlayer2(true);
+            this.setDefectingAsPunishmentToMyOpponentAsPlayer1(true);
 
         }
 
