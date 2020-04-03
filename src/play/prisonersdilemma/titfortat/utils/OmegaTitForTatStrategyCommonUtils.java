@@ -7,7 +7,7 @@ import play.prisonersdilemma.utils.PrisonersDilemmaStrategyCommonUtils;
  *
  * Computational Game Theory - 2019/2020
  * Faculty of Sciences and Technology of
- * New University of Lisbon (FCT NOVA)
+ * New University of Lisbon (FCT NOVA | FCT/UNL)
  *
  * 1st Tournament - Prisoner's Dilemma,
  * using NOVA GTI (Game Theory Interactive) Platform

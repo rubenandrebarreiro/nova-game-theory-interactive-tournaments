@@ -69,7 +69,12 @@ public abstract class PrisonersDilemmaStrategyCommonUtils {
     /**
      * The total number of Game Stages/Rounds played, until the moment.
      */
-    protected static int TOTAL_NUM_OF_GAME_STAGES_ROUNDS;
+    public static int TOTAL_NUM_OF_GAME_STAGES_ROUNDS;
+
+    /**
+     * The Probability of continue to the next Game Stage/Round.
+     */
+    public static double PROBABILITY_OF_CONTINUE_TO_THE_NEXT_GAME_STAGE_ROUND;
 
 
     // Global Instance Variables:
@@ -77,17 +82,17 @@ public abstract class PrisonersDilemmaStrategyCommonUtils {
     /**
      * The number of Game Stages/Rounds currently played.
      */
-    protected int numOfGameStagesRoundsCurrentlyPlayed;
+    public int numOfGameStagesRoundsCurrentlyPlayed;
 
     /**
      * The Last Move played by My Opponent, in the last Game Stage/Round, as Player #1.
      */
-    protected String myOpponentMovePlayedInLastGameStageRoundAsPlayer1;
+    public String myOpponentMovePlayedInLastGameStageRoundAsPlayer1;
 
     /**
      * The Last Move played by My Opponent, in the last Game Stage/Round, as Player #2.
      */
-    protected String myOpponentMovePlayedInLastGameStageRoundAsPlayer2;
+    public String myOpponentMovePlayedInLastGameStageRoundAsPlayer2;
 
 
     // Constructors:
@@ -107,6 +112,17 @@ public abstract class PrisonersDilemmaStrategyCommonUtils {
     // Public Methods/Procedures:
 
     /**
+     * Returns the Total Number of the current Game Stages/Rounds.
+     *
+     * @return the Total Number of the current Game Stages/Rounds
+     */
+    public static int getTotalNumOfGameStagesRounds() {
+
+        return TOTAL_NUM_OF_GAME_STAGES_ROUNDS;
+
+    }
+
+    /**
      * Sets the Total Number of the current Game Stages/Rounds.
      *
      * @param totalNumOfGameStagesRounds the Total Number of the current Game Stages/Rounds
@@ -118,13 +134,39 @@ public abstract class PrisonersDilemmaStrategyCommonUtils {
     }
 
     /**
+     * Returns the Probability of continue to the next Game Stage/Round.
+     *
+     * @return the Probability of continue to the next Game Stage/Round
+     */
+    public static double getProbabilityOfContinueToTheNextGameStageRound() {
+
+        return PROBABILITY_OF_CONTINUE_TO_THE_NEXT_GAME_STAGE_ROUND;
+
+    }
+
+    /**
+     * Sets the Probability of continue to the next Game Stage/Round.
+     *
+     * @param probabilityOfContinueToTheNextGameStageRound the Probability of continue to the next Game Stage/Round
+     */
+    public static void setProbabilityOfContinueToTheNextGameStageRound
+        (
+                double probabilityOfContinueToTheNextGameStageRound
+        )
+    {
+
+        PROBABILITY_OF_CONTINUE_TO_THE_NEXT_GAME_STAGE_ROUND = probabilityOfContinueToTheNextGameStageRound;
+
+    }
+
+    /**
      * Returns the number of Game Stages/Rounds currently played.
      *
      * @return the number of Game Stages/Rounds currently played
      */
     public int getNumOfGameStagesRoundsCurrentlyPlayed() {
 
-        return numOfGameStagesRoundsCurrentlyPlayed;
+        return this.numOfGameStagesRoundsCurrentlyPlayed;
 
     }
 
@@ -162,7 +204,8 @@ public abstract class PrisonersDilemmaStrategyCommonUtils {
             )
     {
 
-        this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1 = myOpponentMovePlayedInLastGameStageRoundAsPlayer1;
+        this.myOpponentMovePlayedInLastGameStageRoundAsPlayer1 =
+                        myOpponentMovePlayedInLastGameStageRoundAsPlayer1;
 
     }
 
