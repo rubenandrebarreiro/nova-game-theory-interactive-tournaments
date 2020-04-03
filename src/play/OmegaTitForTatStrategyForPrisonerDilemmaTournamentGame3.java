@@ -10,9 +10,11 @@ package play;
  * using NOVA GTI (Game Theory Interactive) Platform
  *
  * Omega Tit For Tat Strategy specially design for
- * the specifications of the Game #1, which states:
- * - 1) Total Number of 20 Iterations;
- * - 2) Probability of 1.0 (i.e., 100%) of the Game
+ * the specifications of the Game #3, which states:
+ * - 1) Unknown Total Number of Iterations
+ *     (defined at the moment of the Game being initiated);
+ * - 2) Unknown Probability of the Game
+ *     (defined as less than 1.0, i.e., less than 100%)
  *      continue to the next Game Stage/Round;
  *
  * Authors:
@@ -23,7 +25,7 @@ package play;
  *
  */
 
-public class OmegaTitForTatForPrisonerDilemmaTournamentGame1 extends Strategy {
+public class OmegaTitForTatStrategyForPrisonerDilemmaTournamentGame3 extends Strategy {
     @Override
     public void execute() throws InterruptedException {
 

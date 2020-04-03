@@ -24,7 +24,7 @@ package play;
  *
  */
 
-public class OmegaTitForTatForPrisonerDilemmaTournamentGame2 extends Strategy {
+public class OmegaTitForTatStrategyForPrisonerDilemmaTournamentGame2 extends Strategy {
     @Override
     public void execute() throws InterruptedException {
 
