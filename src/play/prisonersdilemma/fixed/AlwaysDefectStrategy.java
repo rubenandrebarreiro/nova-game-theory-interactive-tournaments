@@ -92,7 +92,8 @@ public class AlwaysDefectStrategy extends Strategy {
                     double[] availableMovesProbabilities = new double[ currentValidationSetIterator.next() ];
 
                     // As I'm playing an Always Defect Strategy, I will always Defect
-                    System.out.println("I am very nicely, so I will always Defect, as Player #" + playerNum + "...");
+                    System.out.println("I am very nicely, so I will always Defect, as Player #" + playerNum +
+                                       "...\n\n");
 
                     // Sets the Probability for the Cooperate (C) Move
                     availableMovesProbabilities[0] = 0.0;

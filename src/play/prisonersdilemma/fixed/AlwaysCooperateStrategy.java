@@ -92,7 +92,8 @@ public class AlwaysCooperateStrategy extends Strategy {
                     double[] availableMovesProbabilities = new double[ currentValidationSetIterator.next() ];
 
                     // As I'm playing an Always Cooperate Strategy, I will always Cooperate
-                    System.out.println("I am very nicely, so I will always Cooperate, as Player #" + playerNum + "...");
+                    System.out.println("I am very nicely, so I will always Cooperate, as Player #" + playerNum +
+                                       "...\n\n");
 
                     // Sets the Probability for the Cooperate (C) Move
                     availableMovesProbabilities[0] = 1.0;
