@@ -16,6 +16,7 @@ public class FixedRoundsStrategy extends Strategy {
     int iteration;
     int cooperatePayoff;
     int defectPayoff;
+    int defectToCooperatePayoff;
 
     boolean grimTriggeredP1 = false;
     boolean grimTriggeredP2 = false;
@@ -112,11 +113,9 @@ public class FixedRoundsStrategy extends Strategy {
                 game.showGame();
                 //endregion
 
-                numberOfIterations = myStrategy.getMaximumNumberOfIterations();
-                iteration = 0;
-
                 cooperatePayoff = U1[0][0]; // Top-left of normal form
                 defectPayoff = U1[1][1]; // bottom-right of normal form
+                defectToCooperatePayoff = U1[1][0];
 
                 double[] strategyP1 = setStrategy(1,labelsP1,myStrategy);
                 double[] strategyP2 = setStrategy(2,labelsP2,myStrategy);
@@ -161,6 +160,7 @@ public class FixedRoundsStrategy extends Strategy {
         /*for (int i = 0; i < strategy.length; i++) {
             strategy[i] = 0.5;
         }*/
+
         //region strategize for P1
         if(P == 1) {
             if(!grimTriggeredP1) {
@@ -225,6 +225,18 @@ public class FixedRoundsStrategy extends Strategy {
             }
         }
         //endregion
+
+        // region Check if it pays off to defect and defect if so
+        int iterationsLeft = myStrategy.getMaximumNumberOfIterations();
+        int gainFromDefect = defectToCooperatePayoff - cooperatePayoff;
+        int lossFromDefect = (cooperatePayoff - defectPayoff) * (iterationsLeft - 1);
+
+        if(gainFromDefect > lossFromDefect){
+            // Defect if it pays off
+            strategy[0] = 0;
+            strategy[1] = 1;
+        }
+        // endregion
 
         // send strategy
         for (int i = 0; i<n; i++) myStrategy.put(labels[i], strategy[i]);
