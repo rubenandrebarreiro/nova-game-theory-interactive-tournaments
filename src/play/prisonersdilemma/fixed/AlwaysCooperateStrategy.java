@@ -81,6 +81,8 @@ public class AlwaysCooperateStrategy extends Strategy {
                 // The Labels for All the Available Moves
                 Iterator<String> availableMovesLabels = myStrategy.keyIterator();
 
+                int playerNum = 1;
+
                 // Loop to check all the Entries of the Validation Set
                 // (i.e., a Decision Node of the Tree representing the current Game)
                 while(currentValidationSetIterator.hasNext()) {
@@ -90,7 +92,7 @@ public class AlwaysCooperateStrategy extends Strategy {
                     double[] availableMovesProbabilities = new double[ currentValidationSetIterator.next() ];
 
                     // As I'm playing an Always Cooperate Strategy, I will always Cooperate
-                    System.out.println("I am very nicely, so I will always Cooperate...");
+                    System.out.println("I am very nicely, so I will always Cooperate, as Player #" + playerNum + "...");
 
                     // Sets the Probability for the Cooperate (C) Move
                     availableMovesProbabilities[0] = 1.0;
@@ -115,6 +117,8 @@ public class AlwaysCooperateStrategy extends Strategy {
                         myStrategy.put( availableMovesLabels.next(), availableMoveProbability );
 
                     }
+
+                    playerNum++;
 
                 }
 

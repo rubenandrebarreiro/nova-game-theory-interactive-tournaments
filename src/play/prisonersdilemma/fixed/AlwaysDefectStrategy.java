@@ -81,6 +81,8 @@ public class AlwaysDefectStrategy extends Strategy {
                 // The Labels for All the Available Moves
                 Iterator<String> availableMovesLabels = myStrategy.keyIterator();
 
+                int playerNum = 1;
+
                 // Loop to check all the Entries of the Validation Set
                 // (i.e., a Decision Node of the Tree representing the current Game)
                 while(currentValidationSetIterator.hasNext()) {
@@ -90,7 +92,7 @@ public class AlwaysDefectStrategy extends Strategy {
                     double[] availableMovesProbabilities = new double[ currentValidationSetIterator.next() ];
 
                     // As I'm playing an Always Defect Strategy, I will always Defect
-                    System.out.println("I am very nicely, so I will always Defect...");
+                    System.out.println("I am very nicely, so I will always Defect, as Player #" + playerNum + "...");
 
                     // Sets the Probability for the Cooperate (C) Move
                     availableMovesProbabilities[0] = 0.0;
@@ -115,6 +117,8 @@ public class AlwaysDefectStrategy extends Strategy {
                         myStrategy.put( availableMovesLabels.next(), availableMoveProbability );
 
                     }
+
+                    playerNum++;
 
                 }
 
