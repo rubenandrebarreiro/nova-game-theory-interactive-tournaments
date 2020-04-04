@@ -342,6 +342,8 @@ public abstract class PrisonersDilemmaStrategyCommonUtils {
     public static void isATerminalGameNode(PlayStrategy myStrategy,
                                            GameNode gameNodePlayer1, GameNode gameNodePlayer2) {
 
+        System.out.println();
+
         System.out.println("The current play isn't completed yet...\n\n");
 
         System.out.println("Checking if was reached a Terminal Game Node in " +
