@@ -319,6 +319,9 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
         // so it's more benefit to play a Defect Move, acting as both, Players #1 and #2
         if(gainFromDefect > deterministicLossFromDefect) {
 
+            System.out.println("I'm gonna to play a Defect Move now, " +
+                               "because the Expected Utility Gain from Defect could be, maybe, much worthy!!!\n\n");
+
             // As playing a Cooperate it's not more worthy, I will play a Defect Move,
             // in the next Game Stage/Round, acting as Players #1
             System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_1 +
@@ -331,6 +334,8 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
             myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
             myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
 
+            System.out.println();
+
             // As playing a Cooperate it's not more worthy, I will play a Defect Move,
             // in the next Game Stage/Round, acting as Players #2
             System.out.println("Setting the Probability of " + COOPERATE_AS_PLAYER_2 +
@@ -342,6 +347,8 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
             // as 0.0 and 1.0, respectively, as Player #2
             myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
             myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
+
+            System.out.println();
 
         }
         // The Expected Gain from playing a Defect Move it's lower or equal than
