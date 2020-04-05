@@ -112,7 +112,7 @@ public class ProbabilisticRoundsStrategy extends Strategy {
 
                 cooperatePayoff = U1[0][0]; // Top-left of normal form
                 defectPayoff = U1[1][1]; // bottom-right of normal form
-                defectToCooperatePayoff = U1[1][0];
+                defectToCooperatePayoff = U1[1][0]; // bottom-left of normal form
 
                 double[] strategyP1 = setStrategy(1,labelsP1,myStrategy);
                 double[] strategyP2 = setStrategy(2,labelsP2,myStrategy);
