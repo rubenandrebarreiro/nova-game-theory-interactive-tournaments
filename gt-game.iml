@@ -23,5 +23,6 @@
       </library>
     </orderEntry>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" name="gametheroy-client" level="project" />
   </component>
 </module>
