@@ -22,11 +22,11 @@ import static play.prisonersdilemma.utils.PrisonersDilemmaStrategyCommonUtils.*;
  * 1st Tournament - Prisoner's Dilemma,
  * using NOVA GTI (Game Theory Interactive) Platform
  *
- * Grim Trigger Strategy, for Fixed Number of Rounds
+ * Grim Trigger For Fixed Number of Rounds Strategy
  *
  * Authors:
  * - Pedro Lamarao Pais (Student no. 48247)
- *   - pgp@campus.fct.unl.pt
+ *   - pg.pais@campus.fct.unl.pt
  * - Ruben Andre Barreiro (Student no. 42648)
  *   - r.barreiro@campus.fct.unl.pt
  *
@@ -56,9 +56,9 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
     // Global Instance Variables:
 
     /**
-     * The Grim Trigger Strategy's Common Utils.
+     * The Grim Trigger Strategy For Fixed Number of Rounds' Common Utils.
      */
-    private GrimTriggerStrategyCommonUtils myGrimTriggerStrategyCommonUtils;
+    private GrimTriggerStrategyCommonUtils myGrimTriggerForFixedNumRoundsStrategyCommonUtils;
 
 
     // Public Methods/Procedures:
@@ -93,18 +93,19 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
         boolean isMyGrimTriggerStrategyCommonUtilsInitialized = false;
 
         // Prints the Basic Information about this Strategy
-        System.out.println("Start playing with the Grim Trigger Strategy...\n\n");
+        System.out.println("Start playing with the Grim Trigger Strategy " +
+                           "For Fixed Number of Rounds...\n\n");
 
 
         // Infinite Loop
         while(true) {
 
-            PlayStrategy myGrimTriggerStrategy = this.getStrategyRequest();
+            PlayStrategy myGrimTriggerForFixedNumRoundsStrategy = this.getStrategyRequest();
 
             // The Strategy chosen by me become NULL,
             // what means (probably) that the Game
             // was terminated by an outside event
-            if (myGrimTriggerStrategy == null) {
+            if (myGrimTriggerForFixedNumRoundsStrategy == null) {
 
                 // Breaks the Infinite Loop
                 break;
@@ -114,12 +115,12 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
             if( !isMyGrimTriggerStrategyCommonUtilsInitialized) {
 
 
-                this.myGrimTriggerStrategyCommonUtils =
-                        new GrimTriggerStrategyCommonUtils(myGrimTriggerStrategy);
+                this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils =
+                        new GrimTriggerStrategyCommonUtils(myGrimTriggerForFixedNumRoundsStrategy);
 
-                this.myGrimTriggerStrategyCommonUtils.setupGrimTriggerStrategyParametersConfiguration();
+                this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.setupGrimTriggerStrategyParametersConfiguration();
 
-                this.myGrimTriggerStrategyCommonUtils.printGrimTriggerStrategyParametersConfiguration();
+                this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.printGrimTriggerStrategyParametersConfiguration();
 
                 isMyGrimTriggerStrategyCommonUtilsInitialized = true;
 
@@ -137,27 +138,27 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                 // Player #1 and Player #2, are Terminal Game Nodes or not
                 isATerminalGameNode
                         (
-                                myGrimTriggerStrategy,
-                                this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP1Node()),
-                                this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP2Node())
+                                myGrimTriggerForFixedNumRoundsStrategy,
+                                this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsStrategy.getFinalP1Node()),
+                                this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsStrategy.getFinalP2Node())
                         );
 
                 // The Current Validation Set for the Available Moves
                 Iterator<Integer> currentValidationSetIterator = tree.getValidationSet().iterator();
 
                 // The Labels for All the Available Moves
-                Iterator<String> availableMovesLabels = myGrimTriggerStrategy.keyIterator();
+                Iterator<String> availableMovesLabels = myGrimTriggerForFixedNumRoundsStrategy.keyIterator();
 
                 System.out.println("I will define My Strategy for the next Game Stage/Round...\n\n");
 
-                finalGameNodePlayer1 = this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP1Node());
-                finalGameNodePlayer2 = this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP2Node());
+                finalGameNodePlayer1 = this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsStrategy.getFinalP1Node());
+                finalGameNodePlayer2 = this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsStrategy.getFinalP2Node());
 
 
                 System.out.println
                         (
                                 "This it's the Game Stage/Round #" +
-                                        ( this.myGrimTriggerStrategyCommonUtils
+                                        ( this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils
                                                 .getNumOfGameStagesRoundsCurrentlyPlayed() + 1 ) +
                                         "...\n\n"
                         );
@@ -209,7 +210,7 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                                                " as Player #" + actingAsPlayerNum);
 
                             // Assigns the current Available Probability to the current
-                            myGrimTriggerStrategy.put(nextAvailableMovesLabel, availableMoveProbability);
+                            myGrimTriggerForFixedNumRoundsStrategy.put(nextAvailableMovesLabel, availableMoveProbability);
 
                         }
 
@@ -235,7 +236,7 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                                 (
                                         listOfOpponentLastMovesAsPlayer1,
                                         listOfOpponentLastMovesAsPlayer2,
-                                        myGrimTriggerStrategy
+                                        myGrimTriggerForFixedNumRoundsStrategy
                                 );
 
                     }
@@ -251,7 +252,7 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                 try {
 
                     // Sets and provides the final Strategy
-                    this.provideStrategy(myGrimTriggerStrategy);
+                    this.provideStrategy(myGrimTriggerForFixedNumRoundsStrategy);
 
                     // Sets My Play as completed, as long I'm finished playing
                     playComplete = true;
@@ -265,9 +266,9 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                 }
 
                 // Increases the number of the Game Stages/Rounds currently played, until now
-                this.myGrimTriggerStrategyCommonUtils.setNumOfGameStagesRoundsCurrentlyPlayed
+                this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.setNumOfGameStagesRoundsCurrentlyPlayed
                         (
-                                this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() + 1
+                                this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() + 1
                         );
 
             }
@@ -302,7 +303,7 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
             (
                     getTotalNumOfGameStagesRounds()
                                     -
-                    this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed()
+                    this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed()
             );
 
         int gainFromDefect = ( I_DEFECT_AND_MY_OPPONENT_COOPERATE_PAYOFF - BOTH_COOPERATE_PAYOFF );
@@ -373,14 +374,14 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
 
                     System.out.println("Analysing the Last Move Played by My Opponent, as Player #1...\n\n");
 
-                    if( ( this.myGrimTriggerStrategyCommonUtils
+                    if( ( this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils
                             .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
                             .equalsIgnoreCase("") )
                             &&
-                            ( this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
+                            ( this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
                     {
 
-                        this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
+                        this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
                                 (
                                         myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                 );
@@ -388,11 +389,11 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                     }
                     else {
 
-                        if( ( !this.myGrimTriggerStrategyCommonUtils
+                        if( ( !this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils
                                 .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
                                 .equalsIgnoreCase("") )
                                 &&
-                                ( !this.myGrimTriggerStrategyCommonUtils
+                                ( !this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils
                                         .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
                                         .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
                         {
@@ -400,7 +401,7 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                             System.out.println("My Opponent changed his behaviour (and the previous last Move played), " +
                                                "as Player #1 and I will memorise that!!!\n\n");
 
-                            this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
+                            this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
                                     (
                                             myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                     );
@@ -409,12 +410,12 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
 
                     }
 
-                    this.myGrimTriggerStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer1();
+                    this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer1();
 
                     // It seems that My Opponent played a Defect Move, in some moment, as Player #1,
                     // in the last Game Stages/Rounds, so I will act severely and
                     // I am gonna punish him always from now, with an All Defect Strategy
-                    if( this.myGrimTriggerStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer1() ) {
+                    if( this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer1() ) {
 
                         System.out.println("My Opponent played a " + DEFECT + " Move, in some moment, as Player #1, " +
                                            "in the last Game Stages/Rounds...\n\n");
@@ -496,14 +497,14 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
 
                     System.out.println("Analysing the Last Move Played by My Opponent, as Player #2...\n\n");
 
-                    if( ( this.myGrimTriggerStrategyCommonUtils
+                    if( ( this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils
                             .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
                             .equalsIgnoreCase("") )
                             &&
-                            ( this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
+                            ( this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
                     {
 
-                        this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
+                        this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
                                 (
                                         myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                 );
@@ -511,11 +512,11 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                     }
                     else {
 
-                        if( ( !this.myGrimTriggerStrategyCommonUtils
+                        if( ( !this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils
                                 .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
                                 .equalsIgnoreCase("") )
                                 &&
-                                ( !this.myGrimTriggerStrategyCommonUtils
+                                ( !this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils
                                         .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
                                         .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
                         {
@@ -523,7 +524,7 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
                             System.out.println("My Opponent changed his behaviour (and the previous last Move played), " +
                                     "as Player #2 and I will memorise that!!!\n\n");
 
-                            this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
+                            this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
                                     (
                                             myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                     );
@@ -532,12 +533,12 @@ public class GrimTriggerForFixedNumRoundsStrategy extends Strategy {
 
                     }
 
-                    this.myGrimTriggerStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer2();
+                    this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer2();
 
                     // It seems that My Opponent played a Defect Move, in some moment, as Player #2,
                     // in the last Game Stages/Rounds, so I will act severely and
                     // I am gonna punish him always from now, with an All Defect Strategy
-                    if( this.myGrimTriggerStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer2() ) {
+                    if( this.myGrimTriggerForFixedNumRoundsStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer2() ) {
 
                         System.out.println("My Opponent played a " + DEFECT + " Move, in some moment, as Player #2, " +
                                 "in the last Game Stages/Rounds...\n\n");

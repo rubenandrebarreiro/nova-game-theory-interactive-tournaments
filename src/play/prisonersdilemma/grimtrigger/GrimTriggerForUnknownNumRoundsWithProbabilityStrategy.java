@@ -22,11 +22,11 @@ import static play.prisonersdilemma.utils.PrisonersDilemmaStrategyCommonUtils.*;
  * 1st Tournament - Prisoner's Dilemma,
  * using NOVA GTI (Game Theory Interactive) Platform
  *
- * Grim Trigger Strategy, for Unknown Number of Rounds with Probability
+ * Grim Trigger For Unknown Number of Rounds with Probability Strategy
  *
  * Authors:
  * - Pedro Lamarao Pais (Student no. 48247)
- *   - pgp@campus.fct.unl.pt
+ *   - pg.pais@campus.fct.unl.pt
  * - Ruben Andre Barreiro (Student no. 42648)
  *   - r.barreiro@campus.fct.unl.pt
  *

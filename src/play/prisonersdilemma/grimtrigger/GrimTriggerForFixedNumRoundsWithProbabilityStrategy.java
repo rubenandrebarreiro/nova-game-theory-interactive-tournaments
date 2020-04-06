@@ -22,11 +22,11 @@ import static play.prisonersdilemma.utils.PrisonersDilemmaStrategyCommonUtils.*;
  * 1st Tournament - Prisoner's Dilemma,
  * using NOVA GTI (Game Theory Interactive) Platform
  *
- * Grim Trigger Strategy, for Fixed Number of Rounds with Probability
+ * Grim Trigger For Fixed Number of Rounds with Probability Strategy
  *
  * Authors:
  * - Pedro Lamarao Pais (Student no. 48247)
- *   - pgp@campus.fct.unl.pt
+ *   - pg.pais@campus.fct.unl.pt
  * - Ruben Andre Barreiro (Student no. 42648)
  *   - r.barreiro@campus.fct.unl.pt
  *
@@ -58,7 +58,7 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
     /**
      * The Grim Trigger Strategy's Common Utils.
      */
-    private GrimTriggerStrategyCommonUtils myGrimTriggerStrategyCommonUtils;
+    private GrimTriggerStrategyCommonUtils myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils;
 
 
     // Public Methods/Procedures:
@@ -90,38 +90,39 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
 
         // The boolean value to keep information about if
         // the Grim Trigger Strategy's Common Utils, it was initialized or not
-        boolean isMyGrimTriggerStrategyCommonUtilsInitialized = false;
+        boolean isMyGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtilsInitialized = false;
 
         // Prints the Basic Information about this Strategy
-        System.out.println("Start playing with the Grim Trigger Strategy...\n\n");
+        System.out.println("Start playing with the Grim Trigger " +
+                           "For Fixed Number of Rounds with Fixed Probability Strategy...\n\n");
 
 
         // Infinite Loop
         while(true) {
 
-            PlayStrategy myGrimTriggerStrategy = this.getStrategyRequest();
+            PlayStrategy myGrimTriggerForFixedNumRoundsWithProbabilityStrategy = this.getStrategyRequest();
 
             // The Strategy chosen by me become NULL,
             // what means (probably) that the Game
             // was terminated by an outside event
-            if (myGrimTriggerStrategy == null) {
+            if (myGrimTriggerForFixedNumRoundsWithProbabilityStrategy == null) {
 
                 // Breaks the Infinite Loop
                 break;
 
             }
 
-            if( !isMyGrimTriggerStrategyCommonUtilsInitialized) {
+            if( !isMyGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtilsInitialized) {
 
 
-                this.myGrimTriggerStrategyCommonUtils =
-                        new GrimTriggerStrategyCommonUtils(myGrimTriggerStrategy);
+                this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils =
+                        new GrimTriggerStrategyCommonUtils(myGrimTriggerForFixedNumRoundsWithProbabilityStrategy);
 
-                this.myGrimTriggerStrategyCommonUtils.setupGrimTriggerStrategyParametersConfiguration();
+                this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.setupGrimTriggerStrategyParametersConfiguration();
 
-                this.myGrimTriggerStrategyCommonUtils.printGrimTriggerStrategyParametersConfiguration();
+                this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.printGrimTriggerStrategyParametersConfiguration();
 
-                isMyGrimTriggerStrategyCommonUtilsInitialized = true;
+                isMyGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtilsInitialized = true;
 
             }
 
@@ -137,27 +138,27 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                 // Player #1 and Player #2, are Terminal Game Nodes or not
                 isATerminalGameNode
                         (
-                                myGrimTriggerStrategy,
-                                this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP1Node()),
-                                this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP2Node())
+                                myGrimTriggerForFixedNumRoundsWithProbabilityStrategy,
+                                this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.getFinalP1Node()),
+                                this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.getFinalP2Node())
                         );
 
                 // The Current Validation Set for the Available Moves
                 Iterator<Integer> currentValidationSetIterator = tree.getValidationSet().iterator();
 
                 // The Labels for All the Available Moves
-                Iterator<String> availableMovesLabels = myGrimTriggerStrategy.keyIterator();
+                Iterator<String> availableMovesLabels = myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.keyIterator();
 
                 System.out.println("I will define My Strategy for the next Game Stage/Round...\n\n");
 
-                finalGameNodePlayer1 = this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP1Node());
-                finalGameNodePlayer2 = this.tree.getNodeByIndex(myGrimTriggerStrategy.getFinalP2Node());
+                finalGameNodePlayer1 = this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.getFinalP1Node());
+                finalGameNodePlayer2 = this.tree.getNodeByIndex(myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.getFinalP2Node());
 
 
                 System.out.println
                         (
                                 "This it's the Game Stage/Round #" +
-                                        ( this.myGrimTriggerStrategyCommonUtils
+                                        ( this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
                                                 .getNumOfGameStagesRoundsCurrentlyPlayed() + 1 ) +
                                         "...\n\n"
                         );
@@ -209,7 +210,7 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                                                " as Player #" + actingAsPlayerNum);
 
                             // Assigns the current Available Probability to the current
-                            myGrimTriggerStrategy.put(nextAvailableMovesLabel, availableMoveProbability);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(nextAvailableMovesLabel, availableMoveProbability);
 
                         }
 
@@ -235,7 +236,7 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                                 (
                                         listOfOpponentLastMovesAsPlayer1,
                                         listOfOpponentLastMovesAsPlayer2,
-                                        myGrimTriggerStrategy
+                                        myGrimTriggerForFixedNumRoundsWithProbabilityStrategy
                                 );
 
                     }
@@ -251,7 +252,7 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                 try {
 
                     // Sets and provides the final Strategy
-                    this.provideStrategy(myGrimTriggerStrategy);
+                    this.provideStrategy(myGrimTriggerForFixedNumRoundsWithProbabilityStrategy);
 
                     // Sets My Play as completed, as long I'm finished playing
                     playComplete = true;
@@ -265,9 +266,9 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                 }
 
                 // Increases the number of the Game Stages/Rounds currently played, until now
-                this.myGrimTriggerStrategyCommonUtils.setNumOfGameStagesRoundsCurrentlyPlayed
+                this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.setNumOfGameStagesRoundsCurrentlyPlayed
                         (
-                                this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() + 1
+                                this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() + 1
                         );
 
             }
@@ -283,7 +284,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
      *
      * @param listOfOpponentLastMovesAsPlayer2 the list of My Opponent Last Moves, as Player #2
      *
-     * @param myGrimTriggerForFixedNumRoundsStrategy the Grim Trigger Strategy for Fixed Number of Rounds
+     * @param myGrimTriggerForFixedNumRoundsWithProbabilityStrategy
+     *        the Grim Trigger for Fixed Number of Rounds With Probability Strategy
      *        I'm currently using, with my moves
      *
      * @throws GameNodeDoesNotExistException an Exception to be thrown, in the case of,
@@ -293,7 +295,7 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
     (
             List<GameNode> listOfOpponentLastMovesAsPlayer1,
             List<GameNode> listOfOpponentLastMovesAsPlayer2,
-            PlayStrategy myGrimTriggerForFixedNumRoundsStrategy
+            PlayStrategy myGrimTriggerForFixedNumRoundsWithProbabilityStrategy
     )
             throws GameNodeDoesNotExistException
     {
@@ -303,7 +305,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
             (
                     getTotalNumOfGameStagesRounds()
                                     -
-                    this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed()
+                    this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
+                        .getNumOfGameStagesRoundsCurrentlyPlayed()
             );
 
         double probabilityOfContinueToTheNextGameStageRound = getProbabilityOfContinueToTheNextGameStageRound();
@@ -351,8 +354,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
 
             // Sets the probability of playing Cooperate and Defect Moves,
             // as 0.0 and 1.0, respectively, as Player #1
-            myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
-            myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
+            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
+            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
 
             System.out.println();
 
@@ -365,8 +368,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
 
             // Sets the probability of playing Cooperate and Defect Moves,
             // as 0.0 and 1.0, respectively, as Player #2
-            myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
-            myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
+            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
+            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
 
             System.out.println();
 
@@ -394,14 +397,14 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
 
                     System.out.println("Analysing the Last Move Played by My Opponent, as Player #1...\n\n");
 
-                    if( ( this.myGrimTriggerStrategyCommonUtils
+                    if( ( this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
                             .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
                             .equalsIgnoreCase("") )
                             &&
-                            ( this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
+                            ( this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
                     {
 
-                        this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
+                        this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
                                 (
                                         myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                 );
@@ -409,11 +412,11 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                     }
                     else {
 
-                        if( ( !this.myGrimTriggerStrategyCommonUtils
+                        if( ( !this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
                                 .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
                                 .equalsIgnoreCase("") )
                                 &&
-                                ( !this.myGrimTriggerStrategyCommonUtils
+                                ( !this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
                                         .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer1()
                                         .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
                         {
@@ -421,7 +424,7 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                             System.out.println("My Opponent changed his behaviour (and the previous last Move played), " +
                                                "as Player #1 and I will memorise that!!!\n\n");
 
-                            this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
+                            this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer1
                                     (
                                             myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                     );
@@ -430,12 +433,12 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
 
                     }
 
-                    this.myGrimTriggerStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer1();
+                    this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer1();
 
                     // It seems that My Opponent played a Defect Move, in some moment, as Player #1,
                     // in the last Game Stages/Rounds, so I will act severely and
                     // I am gonna punish him always from now, with an All Defect Strategy
-                    if( this.myGrimTriggerStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer1() ) {
+                    if( this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer1() ) {
 
                         System.out.println("My Opponent played a " + DEFECT + " Move, in some moment, as Player #1, " +
                                            "in the last Game Stages/Rounds...\n\n");
@@ -451,8 +454,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
-                        myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
+                        myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
+                        myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
 
                     }
 
@@ -478,8 +481,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                             System.out.println("\n\n");
 
                             // Setting My Strategy, accordingly to the previously mentioned description
-                            myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_2, 1.0);
-                            myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_2, 0.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_2, 1.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_2, 0.0);
 
                         }
 
@@ -502,8 +505,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                             System.out.println("\n\n");
 
                             // Setting My Strategy, accordingly to the previously mentioned description
-                            myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
-                            myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_2, 0.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_2, 1.0);
 
                         }
 
@@ -517,14 +520,14 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
 
                     System.out.println("Analysing the Last Move Played by My Opponent, as Player #2...\n\n");
 
-                    if( ( this.myGrimTriggerStrategyCommonUtils
+                    if( ( this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
                             .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
                             .equalsIgnoreCase("") )
                             &&
-                            ( this.myGrimTriggerStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
+                            ( this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.getNumOfGameStagesRoundsCurrentlyPlayed() == 1 ) )
                     {
 
-                        this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
+                        this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
                                 (
                                         myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                 );
@@ -532,11 +535,11 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                     }
                     else {
 
-                        if( ( !this.myGrimTriggerStrategyCommonUtils
+                        if( ( !this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
                                 .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
                                 .equalsIgnoreCase("") )
                                 &&
-                                ( !this.myGrimTriggerStrategyCommonUtils
+                                ( !this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils
                                         .getMyOpponentMovePlayedInLastGameStageRoundAsPlayer2()
                                         .equalsIgnoreCase( myOpponentMoveInLastGameStageRoundParts[2].toUpperCase() ) ) )
                         {
@@ -544,7 +547,7 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                             System.out.println("My Opponent changed his behaviour (and the previous last Move played), " +
                                     "as Player #2 and I will memorise that!!!\n\n");
 
-                            this.myGrimTriggerStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
+                            this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.setMyOpponentMovePlayedInLastGameStageRoundAsPlayer2
                                     (
                                             myOpponentMoveInLastGameStageRoundParts[2].toUpperCase()
                                     );
@@ -553,12 +556,12 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
 
                     }
 
-                    this.myGrimTriggerStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer2();
+                    this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.checkIfMyOpponentDefectedInLastRoundAsPayer2();
 
                     // It seems that My Opponent played a Defect Move, in some moment, as Player #2,
                     // in the last Game Stages/Rounds, so I will act severely and
                     // I am gonna punish him always from now, with an All Defect Strategy
-                    if( this.myGrimTriggerStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer2() ) {
+                    if( this.myGrimTriggerForFixedNumRoundsWithProbabilityStrategyCommonUtils.isDefectingAsPunishmentToMyOpponentAsPlayer2() ) {
 
                         System.out.println("My Opponent played a " + DEFECT + " Move, in some moment, as Player #2, " +
                                 "in the last Game Stages/Rounds...\n\n");
@@ -574,8 +577,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                         System.out.println("\n\n");
 
                         // Setting My Strategy, accordingly to the previously mentioned description
-                        myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
-                        myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
+                        myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
+                        myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
 
                     }
 
@@ -601,8 +604,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                             System.out.println("\n\n");
 
                             // Setting My Strategy, accordingly to the previously mentioned description
-                            myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_1, 1.0);
-                            myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_1, 0.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_1, 1.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_1, 0.0);
 
                         }
 
@@ -625,8 +628,8 @@ public class GrimTriggerForFixedNumRoundsWithProbabilityStrategy extends Strateg
                             System.out.println("\n\n");
 
                             // Setting My Strategy, accordingly to the previously mentioned description
-                            myGrimTriggerForFixedNumRoundsStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
-                            myGrimTriggerForFixedNumRoundsStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(COOPERATE_AS_PLAYER_1, 0.0);
+                            myGrimTriggerForFixedNumRoundsWithProbabilityStrategy.put(DEFECT_AS_PLAYER_1, 1.0);
 
                         }
 

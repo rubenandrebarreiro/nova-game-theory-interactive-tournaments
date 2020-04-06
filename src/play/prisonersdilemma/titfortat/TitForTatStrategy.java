@@ -26,7 +26,7 @@ import static play.prisonersdilemma.utils.PrisonersDilemmaStrategyCommonUtils.*;
  *
  * Authors:
  * - Pedro Lamarao Pais (Student no. 48247)
- *   - pgp@campus.fct.unl.pt
+ *   - pg.pais@campus.fct.unl.pt
  * - Ruben Andre Barreiro (Student no. 42648)
  *   - r.barreiro@campus.fct.unl.pt
  *
