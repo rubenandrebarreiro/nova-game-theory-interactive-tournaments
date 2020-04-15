@@ -11,12 +11,12 @@ public class NormalFormGame {
 	/**
 	 * The List of Action Moves for Player #1 (Rows' Player)
 	 */
-	private List<String> player1RowActionMoves;
+	public List<String> player1RowActionMoves;
 
 	/**
 	 * The List of Action Moves for Player #1 (Rows' Player)
 	 */
-	private List<String> player2ColumnActionMoves;
+	public List<String> player2ColumnActionMoves;
 
 	/**
 	 * The number of Rows of the Normal-Form Game.
@@ -45,12 +45,12 @@ public class NormalFormGame {
 	/**
 	 * The Payoff Utilities for the Normal-Form Game's Rows (Action Moves for Player #1).
 	 */
-	private double[][] utilitiesPayoffsNormalFormMatrixPlayer1;
+	public int[][] utilitiesPayoffsNormalFormMatrixPlayer1;
 
 	/**
 	 * The Payoff Utilities for the Normal-Form Game's Rows (Action Moves for Player #2).
 	 */
-	private double[][] utilitiesPayoffsNormalFormMatrixPlayer2;
+	public int[][] utilitiesPayoffsNormalFormMatrixPlayer2;
 
 
 	// Constructors:
@@ -111,8 +111,8 @@ public class NormalFormGame {
 		}
 
 		// The Payoffs' Utilities for this Normal-Form Game
-		this.utilitiesPayoffsNormalFormMatrixPlayer1 = new double[this.numOfRows][this.numOfColumns];
-		this.utilitiesPayoffsNormalFormMatrixPlayer2 = new double[this.numOfRows][this.numOfColumns];
+		this.utilitiesPayoffsNormalFormMatrixPlayer1 = new int[this.numOfRows][this.numOfColumns];
+		this.utilitiesPayoffsNormalFormMatrixPlayer2 = new int[this.numOfRows][this.numOfColumns];
 
 		for (int currentRow = 0; currentRow < this.numOfRows; currentRow++) {
 
@@ -153,6 +153,8 @@ public class NormalFormGame {
 
 	}
 
+
+
 	/**
 	 * Prints the this Normal-Form Game in a Matrix Form.
 	 *
@@ -165,12 +167,12 @@ public class NormalFormGame {
 		for (int j = 0; j<this.numOfColumns; j++)  if (this.normalFormGameColumnsPlayer2Considered[j])
 			System.out.print("***********");
 		System.out.println();
-		System.out.print("  ");
+		System.out.print("    ");
 		for (int j = 0; j<this.numOfColumns; j++)  if (this.normalFormGameColumnsPlayer2Considered[j]) {
 				if (this.player2ColumnActionMoves.size()>0) {
-					System.out.print("      ");
+					System.out.print("   ");
 					System.out.print(this.player2ColumnActionMoves.get(j).substring(0,1));
-					System.out.print("    ");
+					System.out.print("   ");
 				}
 				else {
 					System.out.print("\t");
@@ -181,8 +183,8 @@ public class NormalFormGame {
 		for (int i = 0; i<this.numOfRows; i++) if (this.normalFormGameRowsPlayer1Considered[i]) {
 			if (this.player1RowActionMoves.size()>0) System.out.print(this.player1RowActionMoves.get(i).substring(0,1)+ ": ");
 			else System.out.print("Row " +i+ ": ");
-			for (int j = 0; j<this.numOfRows; j++)  if (this.normalFormGameColumnsPlayer2Considered[j]) {
-				String fs = String.format("| %3.0f,%3.0f", this.utilitiesPayoffsNormalFormMatrixPlayer1[i][j], this.utilitiesPayoffsNormalFormMatrixPlayer1[i][j]);
+			for (int j = 0; j<this.numOfColumns; j++)  if (this.normalFormGameColumnsPlayer2Considered[j]) {
+				String fs = String.format("| %d,%d", this.utilitiesPayoffsNormalFormMatrixPlayer1[i][j], this.utilitiesPayoffsNormalFormMatrixPlayer2[i][j]);
 				System.out.print(fs+"  ");
 			}
 			System.out.println("|");

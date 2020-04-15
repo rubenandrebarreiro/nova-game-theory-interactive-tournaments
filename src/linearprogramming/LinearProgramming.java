@@ -51,8 +51,16 @@ public class LinearProgramming {
 
 	@SuppressWarnings("all")
 	public static void setLP3_1() {
+
+		// Columns
+
+		// Always one
 		double[] c = { 1.0, 1.0 };
+
+		// Dominated
 		double[] b = { 8.0, 0.0};
+
+		// Dominating Mixed
 		double[][] A = {
 				{ 0.0, 2.0},
 				{ 7.0, 2.0 }

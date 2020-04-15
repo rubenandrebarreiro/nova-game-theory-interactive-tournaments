@@ -1,4 +1,4 @@
-package play.iteratedremovaldominated;
+package play.iteratedremovaldominated.pure;
 
 import gametree.GameNode;
 import play.NormalFormGame;
@@ -18,10 +18,10 @@ import static play.prisonersdilemma.utils.PrisonersDilemmaStrategyCommonUtils.is
  * Faculty of Sciences and Technology of
  * New University of Lisbon (FCT NOVA | FCT/UNL)
  *
- * Iterated Removal of Strictly Dominated Strategies,
+ * Iterated Removal of Strictly Dominated Pure Strategies,
  * using NOVA GTI (Game Theory Interactive) Platform
  *
- * Iterated Removal of Strictly Dominated Strategies
+ * Iterated Removal of Strictly Dominated Pure Strategies
  *
  * Authors:
  * - Pedro Lamarao Pais (Student no. 48247)
@@ -31,7 +31,7 @@ import static play.prisonersdilemma.utils.PrisonersDilemmaStrategyCommonUtils.is
  *
  */
 
-public class IteratedRemovalOfStrictlyDominatedStrategies extends Strategy {
+public class IteratedRemovalOfStrictlyDominatedPureStrategies extends Strategy {
 
     private GameNode gameRootNode;
 
@@ -45,8 +45,6 @@ public class IteratedRemovalOfStrictlyDominatedStrategies extends Strategy {
     private int[][] utilitiesPayoffsNormalFormMatrixPlayer2;
 
     private NormalFormGame normalFormGame;
-
-    //TODO static LinearProgram linearProgram;
 
     public void startIteratedRemovalOfStrictlyDominatedStrategies(GameNode gameRootNode) {
 
@@ -74,8 +72,6 @@ public class IteratedRemovalOfStrictlyDominatedStrategies extends Strategy {
                                 this.labelsMovesPlayer1,
                                 this.labelsMovesPlayer2
                         );
-
-
 
     }
 
@@ -346,7 +342,7 @@ public class IteratedRemovalOfStrictlyDominatedStrategies extends Strategy {
 
                         for (int currentRow = 0; currentRow < this.totalNumMovesPlayer1; currentRow++) {
 
-                            if(this.normalFormGame.getNormalFormGameRowPlayer1Considered(currentRow)) {
+                            if (this.normalFormGame.getNormalFormGameRowPlayer1Considered(currentRow)) {
 
                                 isCurrentColumnADominatingStrategyUntilNow =
                                         (
@@ -570,9 +566,43 @@ public class IteratedRemovalOfStrictlyDominatedStrategies extends Strategy {
                     else {
 
                         System.out.println("It was found more than one Nash Equilibrium!!!");
-                        System.out.println("It's needed to be used a Mixed-Strategy!!!\n");
+                        System.out.println("It's needed to be used a Uniform Distribution of Probabilities " +
+                                           "for all the Available Moves!!!\n\n");
 
-                        // TODO - Mixed Strategies
+                        double uniformDistributionOfProbabilities =
+                                ( 1.0 / nashEquilibriumAfterIteratedRemovalOfStrictlyDominatedStrategiesList.size() );
+
+                        System.out.println("The Nash Equilibrium for this Game are:\n");
+
+                        for(int[] nashEquilibriumIndexes :
+                                    nashEquilibriumAfterIteratedRemovalOfStrictlyDominatedStrategiesList) {
+
+                            System.out.println("- (" +
+                                               this.showInitialPlayerActionMoveLabel
+                                                        (
+                                                                this.labelsMovesPlayer1[ nashEquilibriumIndexes[0] ]
+                                                        ) +
+                                               "," +
+                                               this.showInitialPlayerActionMoveLabel
+                                                        (
+                                                                this.labelsMovesPlayer2[ nashEquilibriumIndexes[1] ]
+                                                        ) +
+                                               ")\n");
+
+                            if (playerNum == 1) {
+
+                                availableMovesProbabilities[ nashEquilibriumIndexes[0] ] =
+                                                uniformDistributionOfProbabilities;
+
+                            }
+                            else {
+
+                                availableMovesProbabilities[ nashEquilibriumIndexes[1] ] =
+                                                uniformDistributionOfProbabilities;
+
+                            }
+
+                        }
 
                     }
 
